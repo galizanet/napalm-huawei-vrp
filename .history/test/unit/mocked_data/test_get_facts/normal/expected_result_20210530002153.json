@@ -1,0 +1,17 @@
+{
+    "fqdn": "Unknown",
+    "hostname": "test-huawei-router",
+    "interface_list": [
+        "40GE1/0/0",
+        "40GE1/0/1",
+        "40GE1/0/2",
+        "40GE1/0/3",
+        "40GE3/0/2",
+        "40GE1/0/5"
+    ],
+    "model": "S6730-H48X6C",
+    "os_version": "V200R019C10SPC500",
+    "serial_number": "11111111",
+    "uptime": 43200,
+    "vendor": "Huawei"
+}

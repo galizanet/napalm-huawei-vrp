@@ -1,0 +1,43 @@
+[test-huawei-router]display patch-information
+Patch Package Name   :flash:/s6730-h-v200r019sph025.pat
+Patch Package Version:V200R019SPH025
+The state of the patch state file is: Running
+The current state is: Running
+
+************************************************************************
+*           Information about hot patch errors is as follows:          *
+************************************************************************
+
+     Slot            CurrentVersion
+------------------------------------------------------------
+
+No hot patch error occurs on any board.
+
+
+************************************************************************
+*                The hot patch information, as follows:                *
+************************************************************************
+
+ Slot       Type           State     Count Time(YYYY-MM-DD HH:MM:SS)
+------------------------------------------------------------------------
+ 0          C              Running   219   2021-05-13 12:45:46-03:00
+ 0          C-WMP          Running   56    2021-05-13 12:45:55-03:00
+ 0          C-NAC          Running   31    2021-05-13 12:46:03-03:00
+
+
+************************************************************************
+*                The enp patch information, as follows:                *
+************************************************************************
+
+     Slot           Type           State          Count
+------------------------------------------------------------
+
+     0              ENP            Running        1
+
+************************************************************************
+*                The bin patch information, as follows:                *
+************************************************************************
+
+ Slot       State     Count     Time(YYYY-MM-DD HH:MM:SS)
+------------------------------------------------------------------------
+ 0          Running   3         2021-05-13 12:46:07-03:00:00

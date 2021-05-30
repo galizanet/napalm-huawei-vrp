@@ -1,0 +1,26 @@
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 5.170 (S6730 V200R019C10SPC500)
+Copyright (C) 2012-2015 Huawei Technologies Co., Ltd.
+HUAWEI S6730-H48X6C uptime is 0 day, 12 hours, 0 minute
+
+ES6D2S54S000(Master) 1 : uptime is  0 day, 12 hours, 0 minute
+        StartupTime 2018/05/20   23:02:35
+DDR             Memory Size : 4096  M bytes
+FLASH Total     Memory Size : 2048  M bytes
+FLASH Available Memory Size : 1654  M bytes
+Pcb           Version   : VER.C
+BootROM       Version   : 0000.04f1
+BootLoad      Version   : 0213.0000
+CPLD          Version   : 0108
+Software      Version   : VRP (R) Software, Version 5.170 (V200R019C10SPC500)
+FLASH         Version   : 0000.0000
+PWR2 information
+Pcb           Version   : PWR VER.D
+FAN1 information
+Pcb           Version   : NA
+FAN2 information
+Pcb           Version   : NA
+FAN3 information
+Pcb           Version   : NA
+FAN4 information
+Pcb           Version   : NA

@@ -1,0 +1,155 @@
+XGigabitEthernet0/0/20 has 1 neighbor(s):
+
+Neighbor index :1
+Chassis type   :MAC address
+Chassis ID     :b443-267c-1b30
+Port ID type   :Interface name
+Port ID        :XGigabitEthernet0/0/1
+Port description    :TRASPORTE_WEBFOCO <-> FEC
+System name         :BBS-SSA_PoP-BA
+System description  :S6720-30C-EI-24S-DC
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 5.170 (S6720 V200R010C00SPC600)
+Copyright (C) 2000-2016 HUAWEI TECH CO., LTD
+System capabilities supported   :bridge router
+System capabilities enabled     :bridge router
+Management address type  :ipv4
+Management address value :100.64.250.17
+OID  :0.6.15.43.6.1.4.1.2011.5.25.41.1.2.1.1.1.
+Expired time   :92s
+
+Port VLAN ID(PVID)  :1
+VLAN name of VLAN  1:VLAN 0001
+
+Auto-negotiation supported    :No
+Auto-negotiation enabled      :No
+OperMau   :speed(10000)/duplex(Full)
+
+Power port class            :PD
+PSE power supported         :No
+PSE power enabled           :No
+PSE pairs control ability   :No
+Power pairs                 :Unknown
+Port power classification   :Unknown
+
+Link aggregation supported:Yes
+Link aggregation enabled :No
+Aggregation port ID      :0
+
+Maximum frame Size       :9216
+
+XGigabitEthernet0/0/45 has 1 neighbor(s):
+
+Neighbor index :1
+Chassis type   :MAC address
+Chassis ID     :dc21-e230-3500
+Port ID type   :Interface name
+Port ID        :XGigabitEthernet0/0/47
+Port description    :"P2P CONNECTION TO PE-UFBA"
+System name         :pe-riovermelho_s6730
+System description  :Huawei Switch S6730-H48X6C
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 5.170 (S6730 V200R019C10SPC500)
+Copyright (C) 2000-2020 HUAWEI TECH Co., Ltd.
+System capabilities supported   :bridge router
+System capabilities enabled     :bridge router
+Management address type  :ipv4
+Management address value :177.126.127.151
+OID  :0.6.15.43.6.1.4.1.2011.5.25.41.1.2.1.1.1.
+Expired time   :100s
+
+
+Auto-negotiation supported    :No
+Auto-negotiation enabled      :No
+OperMau   :speed(10000)/duplex(Full)
+
+Power port class            :PD
+PSE power supported         :No
+PSE power enabled           :No
+PSE pairs control ability   :No
+Power pairs                 :Unknown
+Port power classification   :Unknown
+
+Link aggregation supported:Yes
+Link aggregation enabled :No
+Aggregation port ID      :0
+
+Maximum frame Size       :9216
+
+XGigabitEthernet0/0/48 has 1 neighbor(s):
+
+Neighbor index :1
+Chassis type   :MAC address
+Chassis ID     :dc21-e230-33f0
+Port ID type   :Interface name
+Port ID        :XGigabitEthernet0/0/48
+Port description    :"link to PE-UFBA_s6720 XGE-0/0/48"
+System name         :pe-cda_s6730
+System description  :Huawei Switch S6730-H48X6C
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 5.170 (S6730 V200R019C10SPC500)
+Copyright (C) 2000-2020 HUAWEI TECH Co., Ltd.
+System capabilities supported   :bridge router
+System capabilities enabled     :bridge router
+Management address type  :ipv4
+Management address value :100.64.127.129
+OID  :0.6.15.43.6.1.4.1.2011.5.25.41.1.2.1.1.1.
+Expired time   :94s
+
+Port VLAN ID(PVID)  :0
+VLAN name of VLAN  1:VLAN 0001
+
+Auto-negotiation supported    :No
+Auto-negotiation enabled      :No
+OperMau   :speed(10000)/duplex(Full)
+
+Power port class            :PD
+PSE power supported         :No
+PSE power enabled           :No
+PSE pairs control ability   :No
+Power pairs                 :Unknown
+Port power classification   :Unknown
+
+Link aggregation supported:Yes
+Link aggregation enabled :Yes
+Aggregation port ID      :101
+
+Maximum frame Size       :9216
+
+100GE0/0/1 has 1 neighbor(s):
+
+Neighbor index :1
+Chassis type   :MAC address
+Chassis ID     :4467-479a-dc30
+Port ID type   :Interface name
+Port ID        :100GE0/0/4
+Port description    :"COR-R4 100GE-0/0/4 --> 100GE-0/0/1 PE-UFBA"
+System name         :sdr1-cor-r4_s6730
+System description  :Huawei Switch S6730-H48X6C
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 5.170 (S6730 V200R020C00SPC300)
+Copyright (C) 2000-2020 HUAWEI TECH Co., Ltd.
+System capabilities supported   :bridge router
+System capabilities enabled     :bridge router
+Management address type  :ipv4
+Management address value :177.126.127.244
+OID  :0.6.15.43.6.1.4.1.2011.5.25.41.1.2.1.1.1.
+Expired time   :96s
+
+
+Auto-negotiation supported    :No
+Auto-negotiation enabled      :No
+OperMau   :speed(40000)/duplex(Full)
+
+Power port class            :PD
+PSE power supported         :No
+PSE power enabled           :No
+PSE pairs control ability   :No
+Power pairs                 :Unknown
+Port power classification   :Unknown
+
+Link aggregation supported:Yes
+Link aggregation enabled :No
+Aggregation port ID      :0
+
+Maximum frame Size       :9216

@@ -1,0 +1,2216 @@
+!Software Version V200R019C10SPC500
+#
+sysname pe-ufba_s6730
+#
+FTP client-source -i LoopBack0
+#
+info-center loghost source LoopBack1
+info-center loghost 177.126.113.20 vpn-instance MGMT source-ip 100.64.127.128
+#
+ipv6
+#
+router id 177.126.127.128
+#
+vcmp role silent
+#
+vlan batch 25 60 to 61 313 316 to 326 328 to 331 336 338 to 339 341 344 365
+vlan batch 691 to 692 702 1155 1307 1312 1318 2603
+#
+lnp disable
+#
+stp mode vbst
+stp disable
+#
+authentication-profile name default_authen_profile
+authentication-profile name dot1x_authen_profile
+authentication-profile name dot1xmac_authen_profile
+authentication-profile name mac_authen_profile
+authentication-profile name multi_authen_profile
+authentication-profile name portal_authen_profile
+#
+set save-configuration interval 43200 delay 1
+set save-configuration backup-to-server server 177.126.113.20 vpn-instance MGMT transport-type sftp port 2712 user backup_user password %^%#A.ZJOh+`.:aE~E1fkv&Z\}.'JySn0J8c<.0FSi6N%^%# path /pe-ufba_s6730
+#
+set password min-length 6
+#
+undo http server enable
+undo http secure-server enable
+#
+clock timezone SALVADOR minus 03:00:00
+#
+transceiver phony-alarm-disable
+#
+observe-port 1 interface XGigabitEthernet0/0/2
+#
+dns snooping ttl delay-time 5760
+#
+arp speed-limit source-ip maximum 10
+arp-miss speed-limit source-ip maximum 60
+#
+diffserv domain default
+#
+ip vpn-instance MGMT
+ ipv4-family
+  route-distinguisher 64512:1
+  vpn-target 64512:1 export-extcommunity
+  vpn-target 64512:1 import-extcommunity
+#
+radius-server template default
+#
+hwtacacs-server template TACACS_SERVERS
+ hwtacacs-server authentication 177.126.113.37
+ hwtacacs-server authorization 177.126.113.37
+ hwtacacs-server accounting 177.126.113.37
+ hwtacacs-server source-ip 177.126.127.128
+ hwtacacs-server shared-key cipher %^%#'<D[3!:m^W`"Ch>I%*+5QoNg%3A"q'Ubz$M[R0;5RdIpC}C2*/Aa{J%<'96C%^%#
+ undo hwtacacs-server user-name domain-included
+#
+bfd
+#
+mpls lsr-id 177.126.127.128
+mpls
+ mpls te
+ mpls te signaling-delay-trigger enable
+ mpls te auto-frr
+ mpls te auto-frr reoptimization
+ mpls te srlg path-calculation preferred
+ mpls bfd enable
+ mpls rsvp-te
+ mpls rsvp-te hello
+ mpls rsvp-te hello full-gr
+ mpls rsvp-te fast-reroute-bandwidth compatible
+ mpls te cspf
+ undo ttl expiration pop
+#
+mpls l2vpn
+#
+explicit-path sec-path-tra-r1
+ next hop 100.64.0.26
+ next hop 100.64.0.28
+ next hop 177.126.127.72
+ next hop 177.126.127.248
+#
+explicit-path sec-path-tra-r2
+ next hop 100.64.0.26
+ next hop 100.64.0.28
+ next hop 177.126.127.72
+ next hop 177.126.127.5
+ next hop 177.126.127.249
+#
+pw-template pw-tra-r1
+ peer-address 177.126.127.248
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-tra-r2
+ peer-address 177.126.127.249
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-cda
+ peer-address 177.126.127.129
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-plataforma
+ peer-address 177.126.127.131
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-cor-r4
+ peer-address 177.126.127.244
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-camacari
+ peer-address 177.126.127.146
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-itabuna
+ peer-address 177.126.127.140
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-fsa
+ peer-address 177.126.127.149
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-saj
+ peer-address 177.126.127.153
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-riovermelho
+ peer-address 177.126.127.151
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-uruguai
+ peer-address 177.126.127.154
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-irece
+ peer-address 177.126.127.160
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-coutos
+ peer-address 177.126.127.130
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-embratel
+ peer-address 177.126.127.132
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-oi
+ peer-address 177.126.127.134
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-stockcenter
+ peer-address 177.126.127.136
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-piraja
+ peer-address 177.126.127.137
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-sussuarana
+ peer-address 177.126.127.138
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-hangar
+ peer-address 177.126.127.139
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-wt
+ peer-address 177.126.127.141
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-smf
+ peer-address 177.126.127.142
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-cabula
+ peer-address 177.126.127.143
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-alagoinhas
+ peer-address 177.126.127.144
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-abrantes
+ peer-address 177.126.127.147
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-comercio
+ peer-address 177.126.127.148
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-canabrava
+ peer-address 177.126.127.152
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-santacruz
+ peer-address 177.126.127.155
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-nazare
+ peer-address 177.126.127.156
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-gameleira
+ peer-address 177.126.127.159
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-saocaetano
+ peer-address 177.126.127.163
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-dsa
+ peer-address 177.126.127.164
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-fsa_maconica
+ peer-address 177.126.127.165
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-irara
+ peer-address 177.126.127.166
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-cajazeiras
+ peer-address 177.126.127.167
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+pw-template pw-pe-exercito
+ peer-address 177.126.127.168
+ mtu 9000
+ control-word
+ tnl-policy load-balance-6
+#
+mpls ldp
+ graceful-restart
+ loop-detect
+#
+#
+mpls ldp remote-peer 177.126.127.131
+ remote-ip 177.126.127.131
+#
+mpls ldp remote-peer 177.126.127.252
+ remote-ip 177.126.127.252
+#
+mpls ldp remote-peer cor-r3
+ remote-ip 177.126.127.245
+#
+mpls ldp remote-peer cor-r4
+ remote-ip 177.126.127.244
+#
+mpls ldp remote-peer mx5-spo
+ remote-ip 177.126.127.255
+#
+mpls ldp remote-peer pe-abrantes
+ remote-ip 177.126.127.147
+#
+mpls ldp remote-peer pe-alagoinhas
+ remote-ip 177.126.127.144
+#
+mpls ldp remote-peer pe-cabula
+ remote-ip 177.126.127.143
+#
+mpls ldp remote-peer pe-cajazeiras
+ remote-ip 177.126.127.167
+#
+mpls ldp remote-peer pe-camacari
+ remote-ip 177.126.127.146
+#
+mpls ldp remote-peer pe-canabrava
+ remote-ip 177.126.127.152
+#
+mpls ldp remote-peer pe-cda
+ remote-ip 177.126.127.129
+#
+mpls ldp remote-peer pe-cfa
+ remote-ip 177.126.127.161
+#
+mpls ldp remote-peer pe-coelba2
+ remote-ip 177.126.127.145
+#
+mpls ldp remote-peer pe-comercio
+ remote-ip 177.126.127.148
+#
+mpls ldp remote-peer pe-coutos
+ remote-ip 177.126.127.130
+#
+mpls ldp remote-peer pe-cruz
+ remote-ip 177.126.127.162
+#
+mpls ldp remote-peer pe-dsa
+ remote-ip 177.126.127.164
+#
+mpls ldp remote-peer pe-embratel
+ remote-ip 177.126.127.132
+#
+mpls ldp remote-peer pe-exercito
+ remote-ip 177.126.127.168
+#
+mpls ldp remote-peer pe-fsa
+ remote-ip 177.126.127.149
+#
+mpls ldp remote-peer pe-fsa_maconica
+ remote-ip 177.126.127.165
+#
+mpls ldp remote-peer pe-gameleira
+ remote-ip 177.126.127.159
+#
+mpls ldp remote-peer pe-hangar
+ remote-ip 177.126.127.139
+#
+mpls ldp remote-peer pe-irara
+ remote-ip 177.126.127.166
+#
+mpls ldp remote-peer pe-irece
+ remote-ip 177.126.127.160
+#
+mpls ldp remote-peer pe-itabuna
+ remote-ip 177.126.127.140
+#
+mpls ldp remote-peer pe-nazare
+ remote-ip 177.126.127.156
+#
+mpls ldp remote-peer pe-oi
+ remote-ip 177.126.127.134
+#
+mpls ldp remote-peer pe-piraja
+ remote-ip 177.126.127.137
+#
+mpls ldp remote-peer pe-riovermelho
+ remote-ip 177.126.127.151
+#
+mpls ldp remote-peer pe-saj
+ remote-ip 177.126.127.153
+#
+mpls ldp remote-peer pe-santacruz
+ remote-ip 177.126.127.155
+#
+mpls ldp remote-peer pe-saocaetano
+ remote-ip 177.126.127.163
+#
+mpls ldp remote-peer pe-smf
+ remote-ip 177.126.127.142
+#
+mpls ldp remote-peer pe-spo
+ remote-ip 177.126.127.133
+#
+mpls ldp remote-peer pe-stockcenter
+ remote-ip 177.126.127.136
+#
+mpls ldp remote-peer pe-sussuarana
+ remote-ip 177.126.127.138
+#
+mpls ldp remote-peer pe-uruguai
+ remote-ip 177.126.127.154
+#
+mpls ldp remote-peer pe-wt
+ remote-ip 177.126.127.141
+#
+mpls ldp remote-peer sdr1-tra-r1
+ remote-ip 177.126.127.248
+#
+mpls ldp remote-peer sdr1-tra-r2
+ remote-ip 177.126.127.249
+#
+ecc peer-public-key 177.126.113.20 encoding-type der
+ public-key-code begin
+    04768C36 060F06F0 2C3C5D6F 52DC9614 93AD4843 A88A93B4 A07D2AE1 49AC5260
+    67168391 174064DB DAEB1E2D 3CA8E7B8 9B154139 71029579 789A58F4 631586EC
+    04
+ public-key-code end
+peer-public-key end
+#
+pki realm default
+#
+acl number 2000
+ rule 5 permit source 177.126.113.0 0.0.0.63
+ rule 10 permit source 177.126.127.128 0.0.0.127
+ rule 15 permit source 100.64.0.0 0.0.255.255
+acl number 2001
+ rule 5 permit source 177.126.113.0 0.0.0.63
+#
+acl ipv6 number 2000
+ rule 0 permit source 2804:C84:0:98::/64
+ rule 1 permit source 2804:C84:FF00::/40
+acl ipv6 number 2001
+ rule 0 permit source 2804:C84:0:98::/64
+#
+keychain isis_chain mode periodic daily
+ key-id 1
+  algorithm hmac-md5
+  key-string cipher %^%#1e}"BNvv_'f1;)@w|`wDjGhIV)yT{Ap=dY*MS|n(%^%#
+  default send-key-id
+#
+traffic classifier match-any operator or
+ if-match any
+#
+traffic behavior 100M
+ car cir 102400 pir 102400 cbs 12800000 pbs 12800000 green pass yellow pass red discard
+traffic behavior 10M
+ car cir 10240 pir 10240 cbs 1280000 pbs 1280000 green pass yellow pass red discard
+traffic behavior 1M
+ car cir 1024 pir 1024 cbs 128000 pbs 128000 green pass yellow pass red discard
+traffic behavior 200M
+ car cir 204800 pir 204800 cbs 25600000 pbs 25600000 green pass yellow pass red discard
+traffic behavior 20M
+ car cir 20480 pir 20480 cbs 2560000 pbs 2560000 green pass yellow pass red discard
+traffic behavior 2M
+ car cir 2048 pir 2048 cbs 256000 pbs 256000 green pass yellow pass red discard
+traffic behavior 500M
+ car cir 512000 pir 512000 cbs 64000000 pbs 64000000 green pass yellow pass red discard
+traffic behavior 50M
+ car cir 51200 pir 51200 cbs 6400000 pbs 6400000 green pass yellow pass red discard
+traffic behavior 5M
+ car cir 5120 pir 5120 cbs 640000 pbs 640000 green pass yellow pass red discard
+#
+traffic policy 100M match-order config
+ classifier match-any behavior 100M
+traffic policy 10M match-order config
+ classifier match-any behavior 10M
+traffic policy 1M match-order config
+ classifier match-any behavior 1M
+traffic policy 200M match-order config
+ classifier match-any behavior 200M
+traffic policy 20M match-order config
+ classifier match-any behavior 20M
+traffic policy 2M match-order config
+ classifier match-any behavior 2M
+traffic policy 500M match-order config
+ classifier match-any behavior 500M
+traffic policy 50M match-order config
+ classifier match-any behavior 50M
+traffic policy 5M match-order config
+ classifier match-any behavior 5M
+#
+free-rule-template name default_free_rule
+#
+portal-access-profile name portal_access_profile
+#
+drop-profile default
+#
+vlan 60
+ name MPLS
+#
+aaa
+ authentication-scheme TACACS_AAA
+  authentication-mode local hwtacacs
+ authentication-scheme default
+  authentication-mode local hwtacacs
+ authentication-scheme hwtacacs
+  authentication-mode local hwtacacs
+ authentication-scheme radius
+  authentication-mode radius
+ authorization-scheme TACACS_AAA
+  authorization-mode hwtacacs local
+  authorization-cmd 1 hwtacacs local
+  authorization-cmd 3 hwtacacs local
+  authorization-cmd 15 hwtacacs local
+ authorization-scheme default
+  authorization-mode local
+ authorization-scheme hwtacacs
+  authorization-mode local hwtacacs
+  authorization-cmd 15 hwtacacs local
+ accounting-scheme TACACS_AAA
+  accounting-mode hwtacacs
+  accounting start-fail online
+ accounting-scheme default
+  accounting-mode none
+ accounting-scheme hwtacacs
+  accounting-mode hwtacacs
+  accounting start-fail online
+ recording-scheme TACACS_AAA
+  recording-mode hwtacacs TACACS_SERVERS
+ recording-scheme hwtacacs
+ cmd recording-scheme TACACS_AAA
+ local-aaa-user password policy administrator
+  password history record number 0
+  password expire 0
+ domain default
+  authentication-scheme default
+  accounting-scheme default
+  authorization-scheme hwtacacs
+  radius-server default
+ domain default_admin
+  authentication-scheme TACACS_AAA
+  accounting-scheme TACACS_AAA
+  authorization-scheme TACACS_AAA
+  hwtacacs-server TACACS_SERVERS
+ undo user-password complexity-check
+ local-user admin password irreversible-cipher $1a$O`PtHTJ/}7$!T6xABB$%VhoNzJ-LUE;>s_Y3cFS!)l;eL6/22)U$
+ local-user admin privilege level 15
+ local-user admin service-type terminal http
+ local-user dmview password irreversible-cipher $1c$c1/+/YdX%=$uy%g'<G-iSpR_>%AxwmYzTE~5{afUGH>{/!K8_K&$
+ local-user dmview privilege level 15
+ local-user dmview service-type terminal ssh
+ local-user galiza password irreversible-cipher $1a$Bn#|#z:SzX$-.0!VS1xm,d`h{S!nWL52Ubl#D_@[*(:Kg*(^+K/$
+ local-user galiza privilege level 15
+ local-user galiza ftp-directory flash:/
+ local-user galiza service-type telnet terminal ssh ftp
+ local-user netconf password irreversible-cipher $1a$Y{&!)3_GJA$j@C,HrEcV:ia|`(fUcX3xuL2Sz_99M\8/+Fkh{^($
+ local-user netconf privilege level 15
+ local-user netconf ftp-directory flash:/
+ local-user netconf service-type telnet terminal ssh ftp
+#
+isis 1
+ graceful-restart
+ graceful-restart no-impact-holdtime
+ is-level level-2
+ cost-style wide
+ bfd all-interfaces enable
+ bandwidth-reference 1000000
+ ldp-sync enable mpls-binding-only
+ network-entity 49.0001.0177.0126.0127.0128.00
+ is-name pe-ufba_s6730
+ import-route isis level-2 into level-1
+ area-authentication-mode keychain isis_chain all-send-only
+ domain-authentication-mode keychain isis_chain all-send-only
+ lsp-fragments-extend
+ traffic-eng level-2
+ log-peer-change
+#
+ntp-service server disable
+ntp-service ipv6 server disable
+ntp-service unicast-server 200.189.40.8 vpn-instance MGMT source-interface LoopBack1
+ntp-service unicast-server 200.160.0.8 vpn-instance MGMT source-interface LoopBack1
+#
+interface Vlanif1
+#
+interface Vlanif12
+ ip address 10.0.12.112 255.255.255.0
+#
+interface Vlanif307
+#
+interface Vlanif312
+#
+interface Vlanif313
+ description CCTO-IFBAIANOCAU-UFBAXCAU-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-alagoinhas 52720313
+#
+interface Vlanif316
+ description CCTO-IFBA-CAR-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-camacari 52720316
+#
+interface Vlanif317
+ description CCTO-UFOB-BES-RNP-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-cda 52720317
+#
+interface Vlanif318
+ description CCTO-IFBAIANOBMP-BMPXUFBA-LC
+ mtu 9000
+ mpls l2vc pw-template pw-cor-r4 52720318
+#
+interface Vlanif319
+ description CCTO-UFRB-SNA-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-fsa 52720319
+#
+interface Vlanif320
+ description CCTO-UNIVASF(PAF)AJUXUFBA-LC
+ mtu 9000
+ mpls l2vc pw-template pw-cor-r4 52720320
+#
+interface Vlanif321
+ description CCTO-UNIVASF-SBM-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-fsa 52720321
+#
+interface Vlanif322
+ description CCTO-IFBAIANO-SBM-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-fsa 52720322
+#
+interface Vlanif323
+ description CCTO-IFBA-IEE-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-irece 52720323
+#
+interface Vlanif325
+ description CCTO-UFOB-SMV
+ mtu 9000
+ mpls l2vc pw-template pw-cor-r4 52720325
+#
+interface Vlanif326
+ description CCTO-IFBAIANOGNB-GNBXUFBA-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-cda 52720326
+#
+interface Vlanif329
+ description CCTO-UFRB(SDRXSAJ)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-saj 52720329
+#
+interface Vlanif331
+ description CCTO-UFSB(SDRXARA)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-saj 52720331
+#
+interface Vlanif336
+ description CCTO-IFBA(SDRXPAF)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-camacari 52720336
+#
+interface Vlanif338
+ description CCTO-IFBAIANO(SDRXUUU)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-cda 52720338
+#
+interface Vlanif339
+ description CCTO-IFBA-SDRXVCA-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-cda 52720339
+#
+interface Vlanif341
+ description CCTO-IFBA-SNA-LC
+ mtu 9000
+ ip address 10.3.41.128 255.255.255.0
+ mpls l2vc pw-template pw-pe-fsa 52720341
+#
+interface Vlanif344
+ description CCTO-UFBA(SDRXVCA)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-cda 52720344
+#
+interface Vlanif365
+ description CCTO-UFOB(SDRXBMP)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-itabuna 52720365
+#
+interface Vlanif692
+ description CCTO-UFOB(SDRXBAA)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-cor-r4 52720692
+#
+interface Vlanif702
+ description CCTO-IFBA(SDRXVEC)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-cor-r4 52720702
+#
+interface Vlanif1155
+ description CCTO-IFBA(SDRXJBN)-LC
+ mpls l2vc pw-template pw-pe-fsa 527201155
+#
+interface Vlanif1307
+ description CCTO-IFBAIANO(SDRXTAF)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-cor-r4 527201307
+#
+interface Vlanif1312
+ description CCTO-UFSB(SDRXTAF)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-cor-r4 527201312
+#
+interface Vlanif1318
+ description CCTO-UFSB(SDRXITB)-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-itabuna 527201318
+#
+interface Vlanif2603
+ description CCTO-IFBAIANO-SEH-LC
+ mtu 9000
+ mpls l2vc pw-template pw-pe-fsa 527202603
+#
+interface Vlanif3118
+#
+interface MEth0/0/1
+ ip address 192.168.1.253 255.255.255.0
+#
+load-balance-profile L3-MPLS
+ ipv6 field sip dip l4-sport l4-dport protocol sport
+ ipv4 field sip dip l4-sport l4-dport protocol sport
+ mpls field top-label 2nd-label sip dip sport
+#
+interface Eth-Trunk1
+ description "CONNECTION TO PTT-BA"
+ port link-type hybrid
+ undo port hybrid vlan 1
+ mode lacp
+#
+interface Eth-Trunk1.1469
+ description "CCTO-HOLISTICA(PTT-BA-V4)-LC"
+ shutdown
+ mtu 9000
+ dot1q termination vid 1469
+ mpls l2vc pw-template pw-cor-r4 527201469
+#
+interface Eth-Trunk1.1470
+ description "CCTO-HOLISTICA(PTT-BA-V6)-LC"
+ shutdown
+ mtu 9000
+ dot1q termination vid 1470
+ mpls l2vc pw-template pw-cor-r4 527201470
+#
+interface Eth-Trunk1.1491
+ description "CCTO-FREELIFE-SDR-LC-PTT-BAV4"
+ mtu 9000
+ dot1q termination vid 1491
+ mpls l2vc pw-template pw-pe-saj 527201491
+#
+interface Eth-Trunk1.1492
+ description "CCTO-FREELIFE-SDR-LC-PTT-BAV6"
+ mtu 9000
+ dot1q termination vid 1492
+ mpls l2vc pw-template pw-pe-saj 527201492
+#
+interface Eth-Trunk1.1493
+ description "L2VC CCTO-JUNIORWEB-PTT-BA-V4-LC"
+ mtu 9000
+ dot1q termination vid 1493
+ mpls l2vc pw-template pw-pe-saocaetano 527201493
+#
+interface Eth-Trunk1.1494
+ description "L2VC CCTO-JUNIORWEB-PTT-BA-V6-LC"
+ mtu 9000
+ dot1q termination vid 1494
+ mpls l2vc pw-template pw-pe-saocaetano 527201494
+#
+interface Eth-Trunk1.1504
+ description "L2VC CCTO-GALIZANET-PTT-BA(V4)-LC"
+ mtu 9000
+ dot1q termination vid 1504
+ mpls l2vc pw-template pw-pe-irece 527201504
+#
+interface Eth-Trunk1.1505
+ description "L2VC CCTO-GALIZANET-PTT-BA(V6)-LC"
+ mtu 9000
+ dot1q termination vid 1505
+ mpls l2vc pw-template pw-pe-irece 527201505
+#
+interface Eth-Trunk1.1506
+ description "L2VC CCTO-GALIZANET-OPENCDN(V4)-LC"
+ mtu 9000
+ dot1q termination vid 1506
+ mpls l2vc pw-template pw-pe-irece 527201506
+#
+interface Eth-Trunk1.1507
+ description "L2VC CCTO-GALIZANET-OPENCDN(V6)-LC"
+ mtu 9000
+ dot1q termination vid 1507
+ mpls l2vc pw-template pw-pe-irece 527201507
+#
+interface Eth-Trunk1.1508
+ description CCTO-STARTNET(PTT-BA-V6)-LC
+ mtu 9000
+ dot1q termination vid 1508
+ mpls l2vc pw-template pw-cor-r4 527201508
+#
+interface Eth-Trunk1.1509
+ description CCTO-STARTNET(PTT-BA-V6)-LC
+ mtu 9000
+ dot1q termination vid 1509
+ mpls l2vc pw-template pw-cor-r4 527201509
+#
+interface Eth-Trunk1.1603
+ description "L2VC VLAN BILATERAL WEBFOCOXTELETALK"
+ shutdown
+ mtu 9000
+ dot1q termination vid 1603
+#
+interface Eth-Trunk1.1615
+ description "CCTO-TELECOMPONTONET(PTT-BA-V4)-SDR-LC"
+ shutdown
+ mtu 9000
+ dot1q termination vid 1615
+ mpls l2vc pw-template pw-cor-r4 527201615
+#
+interface Eth-Trunk1.1616
+ description "CCTO-TELECOMPONTONET(PTT-BA-V6)-SDR-LC"
+ shutdown
+ mtu 9000
+ dot1q termination vid 1616
+ mpls l2vc pw-template pw-cor-r4 527201616
+#
+interface Eth-Trunk1.1667
+ description "CCTO-PONTONET(PTT-BA-V4)-SDR-LC"
+ shutdown
+ mtu 9000
+ dot1q termination vid 1667
+#
+interface Eth-Trunk1.1668
+ description "CCTO-PONTONET(PTT-BA-V6)-SDR-LC"
+ shutdown
+ mtu 9000
+ dot1q termination vid 1668
+#
+interface Eth-Trunk1.1737
+ description "CCTO-STARTNET(PTT-BA-V4)-SDR-LC"
+ mtu 9000
+ dot1q termination vid 1737
+ mpls l2vc pw-template pw-cor-r4 527201737
+#
+interface Eth-Trunk1.1738
+ description "CCTO-STARTNET(PTT-BA-V6)-SDR-LC"
+ mtu 9000
+ dot1q termination vid 1738
+ mpls l2vc pw-template pw-cor-r4 527201738
+#
+interface Eth-Trunk1.1739
+ description CCTO-JUNIORWEB-OPENCDN(V4)-LC
+ mtu 9000
+ dot1q termination vid 1739
+ mpls l2vc pw-template pw-pe-saocaetano 527201739
+#
+interface Eth-Trunk1.1740
+ description CCTO-JUNIORWEB-OPENCDN(V6)-LC
+ mtu 9000
+ dot1q termination vid 1740
+ mpls l2vc pw-template pw-pe-saocaetano 527201740
+#
+interface Eth-Trunk1.3486
+ description "CCTO-TORRESCONNECT-OPENCDN-LC"
+ mtu 9000
+ dot1q termination vid 3486
+ mpls l2vc pw-template pw-pe-camacari 527203486
+#
+interface Eth-Trunk1.3487
+ description "CCTO-TORRESCONNECT-OPENCDN-LC"
+ mtu 9000
+ dot1q termination vid 3487
+ mpls l2vc pw-template pw-pe-camacari 527203487
+#
+interface Eth-Trunk1.3488
+ description "CCTO-TORRESCONNECT-CAR-LC"
+ mtu 9000
+ dot1q termination vid 3488
+ mpls l2vc pw-template pw-pe-camacari 527203488
+#
+interface Eth-Trunk1.3489
+ description "CCTO-TORRESCONNECT-CAR-LC"
+ mtu 9000
+ dot1q termination vid 3489
+ mpls l2vc pw-template pw-pe-camacari 527203489
+#
+interface Eth-Trunk2
+ description "CONNECTION TO PTT-BA-ATM/OPEN/ITS"
+ port link-type hybrid
+ undo port hybrid vlan 1
+ mode lacp
+#
+interface Eth-Trunk2.10
+ description "L2VC CCTO-WEBFOCO-PTTBA(V4)-SDR-IP"
+ mtu 9000
+ dot1q termination vid 10
+ mpls l2vc pw-template pw-tra-r2 5272010
+#
+interface Eth-Trunk2.20
+ description "L2VC CCTO-WEBFOCO-PTTBA(V6)-SDR-IP"
+ mtu 9000
+ dot1q termination vid 20
+ mpls l2vc pw-template pw-tra-r2 5272020
+#
+interface Eth-Trunk2.1499
+ description "L2VC VLAN BILATERAL WEBFOCOXITS"
+ mtu 9000
+ dot1q termination vid 1499
+ mpls l2vc pw-template pw-tra-r2 527201499
+#
+interface Eth-Trunk2.1647
+ description "L2VC CCTO-WEBFOCO-OPENCDN(V4)-SDR-IP"
+ mtu 9000
+ dot1q termination vid 1647
+ mpls l2vc pw-template pw-tra-r1 527201647
+#
+interface Eth-Trunk2.1648
+ description "L2VC CCTO-WEBFOCO-OPENCDN(V6)-SDR-IP"
+ mtu 9000
+ dot1q termination vid 1648
+ mpls l2vc pw-template pw-tra-r1 527201648
+#
+interface Eth-Trunk19
+ description "CONNECTION TO INFORBARRA”
+ port link-type hybrid
+ undo port hybrid vlan 1
+ mode lacp
+ load-balance enhanced profile L3-MPLS
+#
+interface Eth-Trunk19.3073
+ description "UP-INFORBARRA”
+ mtu 9000
+ dot1q termination vid 3073
+ mpls l2vc pw-template pw-pe-cda 527203073
+#
+interface Eth-Trunk19.4077
+ description "UP-INFORBARRA”
+ mtu 9000
+ dot1q termination vid 4077
+ mpls l2vc pw-template pw-pe-cda 527204077
+#
+interface Eth-Trunk100
+ undo portswitch
+ description "P2P CONNECTION TO PE-CDA_S6720 Eth-Trunk101"
+ mtu 9216
+ ip address 100.64.0.27 255.255.255.254
+ isis enable 1
+ isis circuit-type p2p
+ isis authentication-mode md5 cipher %^%#e24'N.E;{Hg=TV0\W5"P,)%4V\^~t$/91dMcFx*"%^%#
+ isis cost 12000
+ mpls
+ mpls mtu 9100
+ mpls te
+ mpls te bandwidth max-reservable-bandwidth 8000000
+ mpls te bandwidth bc0 8000000
+ mpls rsvp-te
+ mpls rsvp-te bfd enable
+ mpls rsvp-te hello
+ mpls ldp
+ mode lacp
+ load-balance enhanced profile L3-MPLS
+#
+interface XGigabitEthernet0/0/1
+ description "CONNECTION TO PTT-BA-ATM/OPEN/ITS-PORT22"
+ eth-trunk 2
+ storm-control enable log
+#
+interface XGigabitEthernet0/0/2
+ description CCTO-STARTNET-ALH-LC-PTTBA
+ port link-type hybrid
+ undo port hybrid vlan 1
+#
+interface XGigabitEthernet0/0/2.1416
+ description "CCTO-STARTNET-ALH-LC-PTTBA-V4”
+ mtu 9000
+ dot1q termination vid 1416
+ mpls l2vc pw-template pw-cor-r4 527201416
+#
+interface XGigabitEthernet0/0/2.1417
+ description "CCTO-STARTNET-ALH-LC-PTTBA-V6"
+ mtu 9000
+ dot1q termination vid 1417
+ mpls l2vc pw-template pw-cor-r4 527201417
+#
+interface XGigabitEthernet0/0/2.1687
+ description "CCTO-STARTNET-OPENCDN(IPV4)-LC”
+ mtu 9000
+ dot1q termination vid 1687
+ mpls l2vc pw-template pw-cor-r4 527201687
+#
+interface XGigabitEthernet0/0/2.1688
+ description "CCTO-STARTNET-OPENCDN(IPV6)-LC”
+ mtu 9000
+ dot1q termination vid 1688
+ mpls l2vc pw-template pw-cor-r4 527201688
+#
+interface XGigabitEthernet0/0/3
+ description CCTO-ACESSONET-ETC-PTTBA-LC
+ port link-type hybrid
+ undo port hybrid vlan 1
+#
+interface XGigabitEthernet0/0/3.1661
+ description "CCTO-ACESSONET-ETC-PTTBA-LC”
+ mtu 9000
+ dot1q termination vid 1661
+#
+interface XGigabitEthernet0/0/3.1662
+ description "CCTO-ACESSONET-ETC-PTTBA-LC”
+ mtu 9000
+ dot1q termination vid 1662
+#
+interface XGigabitEthernet0/0/4
+ description CCTO-IFBAIANO(SDRXUUU)-LC
+ port link-type dot1q-tunnel
+ port default vlan 338
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/5
+ description CCTO-TELEMAC-SDRXPTTBA-LC
+ port link-type hybrid
+ undo port hybrid vlan 1
+#
+interface XGigabitEthernet0/0/5.300
+ description "CCTO-TELEMAC-SDRXPTTBA-LC”
+ mtu 9000
+ dot1q termination vid 300
+#
+interface XGigabitEthernet0/0/6
+ description LC-REDTECH(PIXEL)
+ port link-type hybrid
+ undo port hybrid vlan 1
+#
+interface XGigabitEthernet0/0/6.1607
+ description "LC-REDTECH(PIXEL”
+ mtu 9000
+ dot1q termination vid 1607
+ mpls l2vc pw-template pw-pe-cda 527201607
+#
+interface XGigabitEthernet0/0/6.1608
+ description "LC-REDTECH(PIXEL”
+ mtu 9000
+ dot1q termination vid 1608
+ mpls l2vc pw-template pw-pe-cda 527201608
+#
+interface XGigabitEthernet0/0/7
+ description CCTO-IFBAIANOCAU-UFBAXCAU-LC
+ port link-type dot1q-tunnel
+ port default vlan 313
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/8
+ description CCTO-UNIVASF-SBM-LC
+ port link-type dot1q-tunnel
+ port default vlan 321
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/9
+ description CCTO-IFBAIANO-SBM-LC
+ port link-type dot1q-tunnel
+ port default vlan 322
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/10
+ description CCTO-UNIVASF(PAF)AJUXUFBA-LC
+ port link-type dot1q-tunnel
+ port default vlan 320
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/11
+ description CCTO-IFBA-IEE-LC
+ port link-type dot1q-tunnel
+ port default vlan 323
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/12
+ description CCTO-IFBASAJ-UFBAXSAJ-LC
+ port link-type dot1q-tunnel
+ port default vlan 330
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/13
+ description CCTO-UFOB-SMV
+ port link-type dot1q-tunnel
+ port default vlan 325
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/14
+ description CCTO-IFBAIANOGNB-GNBXUFBA-LC
+ port link-type dot1q-tunnel
+ port default vlan 326
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/15
+ description CCTO-IFBAIANOBMP-BMPXUFBA-LC
+ port link-type dot1q-tunnel
+ port default vlan 318
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/16
+ description CCTO-IFBA-SDRXVCA-LC
+ port link-type dot1q-tunnel
+ port default vlan 339
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/17
+#
+interface XGigabitEthernet0/0/18
+ description CCTO-UFRB(SDRXSAJ)-LC
+ port link-type dot1q-tunnel
+ port default vlan 329
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/19
+ description UPCONNECTION TO INFORBARRA
+ eth-trunk 19
+#
+interface XGigabitEthernet0/0/20
+ description UP-SENDNET
+ port link-type hybrid
+ undo port hybrid vlan 1
+#
+interface XGigabitEthernet0/0/20.655
+ description "UP-SENDNET”
+ mtu 9000
+ dot1q termination vid 655
+ mpls l2vc pw-template pw-pe-fsa_maconica 52720655
+#
+interface XGigabitEthernet0/0/21
+ description CCTO-IFBA-SNA
+ port link-type dot1q-tunnel
+ port default vlan 341
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/22
+ description CCTO-UFBA(SDRXVCA)-LC
+ port link-type dot1q-tunnel
+ port default vlan 344
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/23
+ description CCTO-IFBA(SDRXPAF)-LC
+ port link-type dot1q-tunnel
+ port default vlan 336
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/24
+#
+interface XGigabitEthernet0/0/25
+ description CCTO-IFBA(SDRXVEC)-LC
+ port link-type dot1q-tunnel
+ port default vlan 702
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/26
+ description CCTO-UFOB(SDRXBAA)-LC
+ port link-type dot1q-tunnel
+ port default vlan 692
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/27
+ description CCTO-IFBAIANO(SDRXTAF)-LC
+ port link-type dot1q-tunnel
+ port default vlan 1307
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/28
+ description CCTO-UFSB(SDRXTAF)-LC
+ port link-type dot1q-tunnel
+ port default vlan 1312
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/29
+ description CCTO-UFOB(SDRXBMP)-LC
+ port link-type dot1q-tunnel
+ port default vlan 365
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/30
+ description CCTO-UFSB(SDRXITB)-LC
+ port link-type dot1q-tunnel
+ port default vlan 1318
+#
+interface XGigabitEthernet0/0/31
+ description CCTO-UFSB(SDRXARA)-LC
+ port link-type dot1q-tunnel
+ port default vlan 331
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/32
+ description CCTO-PDN-LC(CDAXUFBA)
+ port link-type hybrid
+#
+interface XGigabitEthernet0/0/32.260
+ description CCTO-PDN-LC(CDAXUFBA)
+ mtu 9000
+ dot1q termination vid 260
+ mpls l2vc pw-template pw-pe-cda 52720260
+#
+interface XGigabitEthernet0/0/33
+ description CCTO-UFOB-(SDRXBES)-LC
+ port link-type dot1q-tunnel
+ port default vlan 317
+#
+interface XGigabitEthernet0/0/34
+ description CCTO-IFBAIANO-SEH-LC
+ port link-type dot1q-tunnel
+ port default vlan 2603
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/35
+ description CCTO-IFBA-CAR-LC
+ port link-type dot1q-tunnel
+ port default vlan 316
+#
+interface XGigabitEthernet0/0/36
+ description CCTO-UFRB-SNA-LC
+ port link-type dot1q-tunnel
+ port default vlan 319
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/37
+ description CCTO-IFBA(SDRXJBN)-LC
+ port link-type dot1q-tunnel
+ port default vlan 1155
+ traffic-policy 100M inbound
+ traffic-policy 100M outbound
+#
+interface XGigabitEthernet0/0/38
+#
+interface XGigabitEthernet0/0/39
+#
+interface XGigabitEthernet0/0/40
+ port link-type access
+ port default vlan 25
+#
+interface XGigabitEthernet0/0/41
+#
+interface XGigabitEthernet0/0/42
+ description "CONNECTION TO PTT-BA-ATM/OPEN/ITS-PORT51"
+ eth-trunk 2
+ storm-control enable log
+#
+interface XGigabitEthernet0/0/43
+ description "CONNECTION TO PTT_BA CIX PORT-63"
+ eth-trunk 1
+ storm-control enable log
+#
+interface XGigabitEthernet0/0/44
+ description "CONNECTION TO PTT_BA CIX PORT-52"
+ eth-trunk 1
+ storm-control enable log
+#
+interface XGigabitEthernet0/0/45
+ undo portswitch
+ description "P2P CONNECTION TO PE-RIOVERMELHO-XGIG-0/0/23"
+ mtu 9216
+ ip address 100.64.0.134 255.255.255.254
+ isis enable 1
+ isis circuit-type p2p
+ isis authentication-mode md5 cipher %^%#e24'N.E;{Hg=TV0\W5"P,)%4V\^~t$/91dMcFx*"%^%#
+ isis cost 12000
+ mpls
+ mpls mtu 9100
+ mpls te
+ mpls te bandwidth max-reservable-bandwidth 8000000
+ mpls te bandwidth bc0 8000000
+ mpls rsvp-te
+ mpls rsvp-te bfd enable
+ mpls rsvp-te hello
+ mpls ldp
+#
+interface XGigabitEthernet0/0/46
+ description "CONNECTION TO SDR1-COR-R4-XGIG-0/0/16"
+#
+interface XGigabitEthernet0/0/47
+#
+interface XGigabitEthernet0/0/48
+ description "link to PE-CDA_s6720 XGE-0/0/48"
+ eth-trunk 100
+#
+interface 100GE0/0/1
+ undo portswitch
+ description "PE-UFBA Eth-Trunk101 XG0/0/47 --> XG0/0/47 Eth-Trunk100 COR-R3"
+ mtu 9216
+ ip address 100.64.0.25 255.255.255.254
+ isis enable 1
+ isis circuit-type p2p
+ isis authentication-mode md5 cipher %^%#e24'N.E;{Hg=TV0\W5"P,)%4V\^~t$/91dMcFx*"%^%#
+ isis cost 900
+ mpls
+ mpls mtu 9100
+ mpls te
+ mpls te bandwidth max-reservable-bandwidth 32000000
+ mpls te bandwidth bc0 32000000
+ mpls rsvp-te
+ mpls rsvp-te bfd enable
+ mpls rsvp-te hello
+ mpls ldp
+#
+interface 100GE0/0/2
+#
+interface 100GE0/0/3
+#
+interface 100GE0/0/4
+#
+interface 100GE0/0/5
+#
+interface 100GE0/0/6
+#
+interface NULL0
+#
+interface LoopBack0
+ ipv6 enable
+ ip address 177.126.127.128 255.255.255.255
+ ipv6 address 2804:C84:10:FFFF::128/128
+ isis enable 1
+#
+interface LoopBack1
+ description "MGMT ONLY LOOPBACK"
+ ip binding vpn-instance MGMT
+ ip address 100.64.127.128 255.255.255.255
+#
+interface Tunnel1
+ description "pe-ufba_s6730_to_pe-cda_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.129
+ mpls te tunnel-id 1
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-cda_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel2
+ description "pe-ufba_s6730_to_pe-coutos_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.130
+ mpls te tunnel-id 2
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-coutos_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel3
+ description "pe-ufba_s6730_to_pe-plataforma_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.131
+ mpls te tunnel-id 3
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-plataforma_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel4
+ description "pe-ufba_s6730_to_pe-embratel_s5720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.132
+ mpls te tunnel-id 4
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-embratel_s5720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel5
+ description "pe-ufba_s6730_to_pe-oi_s5720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.134
+ mpls te tunnel-id 5
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-oi_s5720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel6
+ description "pe-ufba_s6730_to_pe-stockcenter_6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.136
+ mpls te tunnel-id 6
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-stockcenter_6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel7
+ description "pe-ufba_s6730_to_pe-piraja_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.137
+ mpls te tunnel-id 7
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-piraja_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel8
+ description "pe-ufba_s6730_to_pe-sussuarana_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.138
+ mpls te tunnel-id 8
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-sussuarana_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel9
+ description "pe-ufba_s6730_to_pe-hangar_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.139
+ mpls te tunnel-id 9
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-hangar_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel10
+ description "pe-ufba_s6730_to_pe-itabuna_s5720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.140
+ mpls te tunnel-id 10
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-itabuna_s5720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel11
+ description "pe-ufba_s6730_to_pe-wt_s5720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.141
+ mpls te tunnel-id 11
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-wt_s5720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel12
+ description "pe-ufba_s6730_to_pe-smf_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.142
+ mpls te tunnel-id 12
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-smf_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel13
+ description "pe-ufba_s6730_to_pe-cabula_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.143
+ mpls te tunnel-id 13
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-cabula_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel14
+ description "pe-ufba_s6730_to_pe-alagoinhas_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.144
+ mpls te tunnel-id 14
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-alagoinhas_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel15
+ description "pe-ufba_s6730_to_pe-camacari_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.146
+ mpls te tunnel-id 15
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-camacari_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel16
+ description "pe-ufba_s6730_to_pe-abrantes_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.147
+ mpls te tunnel-id 16
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-abrantes_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel17
+ description "pe-ufba_s6730_to_pe-comercio_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.148
+ mpls te tunnel-id 17
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-comercio_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel18
+ description "pe-ufba_s6730_to_pe-fsa_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.149
+ mpls te tunnel-id 18
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-fsa_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel19
+ description "pe-ufba_s6730_to_pe-riovermelho_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.151
+ mpls te tunnel-id 19
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-riovermelho_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel20
+ description "pe-ufba_s6730_to_pe-canabrava_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.152
+ mpls te tunnel-id 20
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-canabrava_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel21
+ description "pe-ufba_s6730_to_pe-saj_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.153
+ mpls te tunnel-id 21
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-saj_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel22
+ description "pe-ufba_s6730_to_pe-uruguai_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.154
+ mpls te tunnel-id 22
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-uruguai_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel23
+ description "pe-ufba_s6730_to_pe-santacruz_s5720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.155
+ mpls te tunnel-id 23
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-santacruz_s5720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel24
+ description "pe-ufba_s6730_to_pe-nazare_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.156
+ mpls te tunnel-id 24
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-nazare_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel25
+ description "pe-ufba_s6730_to_pe-gameleira_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.159
+ mpls te tunnel-id 25
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-gameleira_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel26
+ description "pe-ufba_s6730_to_pe-irece_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.160
+ mpls te tunnel-id 26
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-irece_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel27
+ description "pe-ufba_s6730_to_pe-cfa_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.161
+ mpls te tunnel-id 27
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-cfa_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel28
+ description "pe-ufba_s6730_to_pe-cruz_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.162
+ mpls te tunnel-id 28
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-cruz_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel29
+ description "pe-ufba_s6730_to_sdr1-cor-r4_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.244
+ mpls te tunnel-id 29
+ mpls te signalled tunnel-name pe-ufba_s6730_to_sdr1-cor-r4_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel30
+ description "pe-ufba_s6730_to_sdr1-cor-r3_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.245
+ mpls te tunnel-id 30
+ mpls te signalled tunnel-name pe-ufba_s6730_to_sdr1-cor-r3_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel31
+ description "pe-ufba_s6730_to_sdr1-tra-r1_ne40_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.248
+ mpls te tunnel-id 31
+ mpls te signalled tunnel-name pe-ufba_s6730_to_sdr1-tra-r1_ne40_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel32
+ description "pe-ufba_s6730_to_sdr1-tra-r2_ne40_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.249
+ mpls te tunnel-id 32
+ mpls te signalled tunnel-name pe-ufba_s6730_to_sdr1-tra-r2_ne40_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel33
+ description "pe-ufba_s6730_to_pe-saocaetano_s6720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.163
+ mpls te tunnel-id 33
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-saocaetano_s6720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel34
+ description "pe-ufba_s6730_to_pe-dsa_s5732_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.164
+ mpls te tunnel-id 34
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-dsa_s5732_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel35
+ description "pe-ufba_s6730_to_pe-fsa_maconica_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.165
+ mpls te tunnel-id 35
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-fsa_maconica_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel36
+ description "pe-ufba_s6730_to_pe-irara_s5732_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.166
+ mpls te tunnel-id 36
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-irara_s5732_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel37
+ description "pe-ufba_s6730_to_pe-cajazeiras_s6730_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.167
+ mpls te tunnel-id 37
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-cajazeiras_s6730_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+interface Tunnel38
+ description "pe-ufba_s6730_to_pe-exercito_s5720_1"
+ shutdown
+ mtu 9000
+ ip address unnumbered interface LoopBack0
+ tunnel-protocol mpls te
+ destination 177.126.127.168
+ mpls te tunnel-id 38
+ mpls te signalled tunnel-name pe-ufba_s6730_to_pe-exercito_s5720_1
+ mpls te primary-lsp-constraint dynamic
+ mpls te loop-detection
+ mpls te record-route label
+ mpls te fast-reroute bandwidth
+ mpls te reoptimization
+ mpls te igp shortcut isis
+ mpls te commit
+ isis enable 1
+ statistic enable
+#
+bgp 52720
+ peer 177.126.127.244 as-number 52720
+ peer 177.126.127.244 description "sdr1-cor-r4_s6730-RR-VPNv4"
+ peer 177.126.127.245 as-number 52720
+ peer 177.126.127.245 description "sdr1-cor-r3_s6730-RR-VPNv4"
+ group IBGP-VPN internal
+ peer IBGP-VPN description "IBGP PEs L3VPN ONLY"
+ peer IBGP-VPN connect-interface LoopBack0
+ #
+ ipv4-family unicast
+  undo synchronization
+  undo peer IBGP-VPN enable
+  undo peer 177.126.127.244 enable
+  undo peer 177.126.127.245 enable
+ #
+ ipv4-family vpnv4
+  policy vpn-target
+  peer IBGP-VPN enable
+  peer IBGP-VPN route-limit 8000 85 idle-timeout 5
+  peer 177.126.127.244 enable
+  peer 177.126.127.244 group IBGP-VPN
+  peer 177.126.127.245 enable
+  peer 177.126.127.245 group IBGP-VPN
+ #
+ ipv4-family vpn-instance MGMT
+  import-route direct
+#
+route-policy leak-l2-to-l1 permit node 10
+ if-match route-type is-is-level-2
+ apply isis level-1
+#
+load-balance packet all
+#
+ip route-static 0.0.0.0 0.0.0.0 100.64.0.24 preference 240
+ip route-static 0.0.0.0 0.0.0.0 100.64.0.26 preference 241
+ip route-static 0.0.0.0 0.0.0.0 177.126.127.249
+#
+snmp-agent
+snmp-agent acl 2001
+snmp-agent local-engineid 800007DB03DC21E2303350
+snmp-agent community read cipher %^%#g{:gG)<S{1,D1a+*~$OPHw"W:/45DPdUo\VOlHO.~9/Q+D{$bQJIw1Y}aEn~=BpW5m^}N~_4Lr"SbRq4%^%#
+snmp-agent community read cipher %^%#EN.FAUVf7Sfg~a$&1U3J+GynNg{39VkohU/q-ODP9F$\JY9%]!I1pQTrT\[HK,ZW.0/Gg=9$.fX$U+p%%^%#
+snmp-agent sys-info contact ops@webfoco.net
+snmp-agent sys-info location "POP-UFBA"
+snmp-agent sys-info version v2c v3
+snmp-agent trap source LoopBack0
+snmp-agent notification-log enable
+snmp-agent extend error-code enable
+snmp-agent trap enable feature-name ARP
+snmp-agent trap enable feature-name L2VPN
+snmp-agent trap enable feature-name ISIS
+snmp-agent trap enable feature-name ldp
+snmp-agent trap enable feature-name ERROR-DOWN
+snmp-agent trap enable feature-name LACP
+snmp-agent trap enable feature-name IFNET
+#
+stelnet server enable
+ssh server port 2712
+ssh user dmview
+ssh user dmview authentication-type password
+ssh user dmview service-type all
+ssh user galiza
+ssh user galiza authentication-type password
+ssh user galiza service-type stelnet
+ssh user netconf
+ssh user netconf authentication-type all
+ssh user netconf service-type all
+ssh client first-time enable
+ssh client 177.126.113.20 assign ecc-key 177.126.113.20
+ssh server acl 2000
+ssh ipv6 server acl 2000
+ssh server hmac sha2_256
+ssh client cipher aes256_ctr aes128_ctr
+ssh client hmac sha2_256
+ssh server dh-exchange min-len 2048
+#
+tunnel-policy load-balance-6
+ tunnel select-seq cr-lsp lsp load-balance-number 6
+#
+undo ttl propagate
+#
+user-interface con 0
+ authentication-mode aaa
+ history-command max-size 128
+user-interface vty 0 4
+ acl 2000 inbound
+ authentication-mode aaa
+ history-command max-size 128
+ idle-timeout 30 0
+user-interface vty 16 20
+ acl 2000 inbound
+ authentication-mode aaa
+ history-command max-size 128
+#
+wlan
+ traffic-profile name default
+ security-profile name default
+ security-profile name default-wds
+ security-profile name default-mesh
+ ssid-profile name default
+ vap-profile name default
+ wds-profile name default
+ mesh-handover-profile name default
+ mesh-profile name default
+ regulatory-domain-profile name default
+ air-scan-profile name default
+ rrm-profile name default
+ radio-2g-profile name default
+ radio-5g-profile name default
+ wids-spoof-profile name default
+ wids-whitelist-profile name default
+ wids-profile name default
+ ap-system-profile name default
+ port-link-profile name default
+ wired-port-profile name default
+ ap-group name default
+ provision-ap
+#
+dot1x-access-profile name dot1x_access_profile
+#
+mac-access-profile name mac_access_profile
+#
+ops
+#
+return
