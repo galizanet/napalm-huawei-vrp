@@ -1,2 +1,0 @@
-[pe-ufba_s6730]display esn
-ESN of slot 0: 11111111

@@ -1,2 +1,0 @@
-[test-huawei-router]display esn
-ESN of slot 0: 11111111
