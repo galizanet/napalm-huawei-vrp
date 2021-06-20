@@ -1,0 +1,32 @@
+{
+    'XGigabitEthernet0/0/20': [{
+        "parent_interface": "",
+        "remote_port": "XGigabitEthernet0/0/1",
+        "remote_port_description": "This is test description to validate the length",
+        "remote_chassis_id": "b443-267c-1b30",
+        "remote_system_name": "SWCORE1",
+        "remote_system_description": "S6720-30C-EI-24S-DC",
+        "remote_system_capab": ["bridge", "router"],
+        "remote_system_enable_capab": ["bridge", "router"]
+    }],
+    'XGigabitEthernet0/0/45': [{
+        "parent_interface": "",
+        "remote_port": "XGigabitEthernet0/0/47",
+        "remote_port_description": "P2P CONNECTION TO CORE2",
+        "remote_chassis_id": "dc21-e230-3500",
+        "remote_system_name": "pe2",
+        "remote_system_description": "Huawei Switch S6730-H48X6C",
+        "remote_system_capab": ["bridge", "router"],
+        "remote_system_enable_capab": ["bridge", "router"]
+    }],
+    'XGigabitEthernet0/0/48': [{
+        "parent_interface": "",
+        "remote_port": "XGigabitEthernet0/0/48",
+        "remote_port_description": "link to pe3 XGE-0/0/48",
+        "remote_chassis_id": "dc21-e230-33f0",
+        "remote_system_name": "pe3",
+        "remote_system_description": "Huawei Switch S6730-H48X6C",
+        "remote_system_capab": ["bridge", "router"],
+        "remote_system_enable_capab": ["bridge", "router"]
+    }]
+}

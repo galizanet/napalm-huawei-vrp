@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2020 2016 Dravetech AB. All rights reserved.
+# Copyright 2021 GalizaNET IT consulting services. All rights reserved.
 #
 # The contents of this file are licensed under the Apache License, Version 2.0
 # (the "License"); you may not use this file except in compliance with the
@@ -14,7 +15,12 @@
 # the License.
 
 """
-Napalm driver for huawei Enterprise switch, community.
+(Yet another) Napalm driver for Huawei VRP software, community edition.
+
+This is a fork based on the original Huawei VRP switch driver:
+- https://github.com/napalm-automation-community/napalm-huawei-vrp 
+
+This driver implements all Napalm API capabilities for Huawei VRP OS devices.
 
 Read https://napalm.readthedocs.io for more information.
 """
@@ -40,6 +46,8 @@ from napalm.base.exceptions import (
 )
 from napalm.base.netmiko_helpers import netmiko_args
 from napalm.base.utils import py23_compat
+
+from utils.helpers import parse_line_lldp
 
 # Easier to store these as constants
 HOUR_SECONDS = 3600
@@ -469,7 +477,7 @@ class HuaweiVRPDriver(NetworkDriver):
         re_protocol = r"Line protocol current state\W+(?P<protocol>.+)$"
         re_mac = r"Hardware address is\W+(?P<mac_address>\S+)"
         re_speed = r"^Speed\W+(?P<speed>\d+|\w+)"
-        re_description = r"(?:Description:\s+)(?P<description>.*$)(?:\n)"
+        re_description = r"(?:^Description:\s+)(?P<description>.*)(?:\nRoute)"
         re_mtu = r"(?:.*The Maximum Transmit Unit is\s+)(?P<mtu>\S+$)"
 
         new_interfaces = self._separate_section(separator, output)
@@ -815,7 +823,7 @@ class HuaweiVRPDriver(NetworkDriver):
         results = {}
         command = 'display lldp neighbor brief'
         output = self.device.send_command(command)
-        re_lldp = r"(?P<local>\S+)\s+(?P<hostname>\S+)\s+(?P<port>\S+)\s+\d+\s+"
+        re_lldp = r"(?P<local_intf>\S+)(?:\s+\d+\s+)(?P<neigh_intf>\S+)(?:\s+)(?P<neigh_name>\S+)"
         match = re.findall(re_lldp, output, re.M)
         for neighbor in match:
             local_intf = neighbor[0]
@@ -823,23 +831,109 @@ class HuaweiVRPDriver(NetworkDriver):
                 results[local_intf] = []
 
             neighbor_dict = dict()
-            neighbor_dict['hostname'] = py23_compat.text_type(neighbor[1])
-            neighbor_dict['port'] = py23_compat.text_type(neighbor[2])
+            neighbor_dict['hostname'] = neighbor[2]
+            neighbor_dict['port'] = neighbor[1]
             results[local_intf].append(neighbor_dict)
         return results
 
     # develop
     def get_lldp_neighbors_detail(self, interface=""):
-        pass
         """
-        Return a detailed view of the LLDP neighbors as a dictionary.
+        Return LLDP neighbors
+
+        Sample input:
+            <device-vrp>dis lldp neighbor
+            XGigabitEthernet0/0/20 has 1 neighbor(s):
+
+            Neighbor index :1
+            Chassis type   :MAC address
+            Chassis ID     :b443-267c-1b30
+            Port ID type   :Interface name
+            Port ID        :XGigabitEthernet0/0/1
+            Port description    :This is test description to validate the length
+            System name         :SWCORE1
+            System description  :S6720-30C-EI-24S-DC
+            Huawei Versatile Routing Platform Software
+            VRP (R) software, Version 5.170 (S6720 V200R010C00SPC600)
+            Copyright (C) 2000-2016 HUAWEI TECH CO., LTD
+            System capabilities supported   :bridge router
+            System capabilities enabled     :bridge router
+            Management address type  :ipv4
+            Management address value :100.64.250.17
+            OID  :0.6.15.43.6.1.4.1.2011.5.25.41.1.2.1.1.1.
+            Expired time   :111s
+
+            Port VLAN ID(PVID)  :1
+            VLAN name of VLAN  1:VLAN 0001
+
+            Auto-negotiation supported    :No
+            Auto-negotiation enabled      :No
+            OperMau   :speed(10000)/duplex(Full)
+
+            Power port class            :PD
+            PSE power supported         :No
+            PSE power enabled           :No
+            PSE pairs control ability   :No
+            Power pairs                 :Unknown
+            Port power classification   :Unknown
+
+            Link aggregation supported:Yes
+            Link aggregation enabled :No
+            Aggregation port ID      :0
+
+            Maximum frame Size       :9216
 
         Sample output:
         {
+            'XGE0/0/20': [
+                {
+                    "parent_interface": "",
+                    "remote_port": "XGigabitEthernet0/0/1",
+                    "remote_port_description": "This is test description to validate the length",
+                    "remote_chassis_id": "b443-267c-1b30",
+                    "remote_system_name": "SWCORE1",
+                    "remote_system_description": "S6720-30C-EI-24S-DC",
+                    "remote_system_capab": ["bridge", "router"],
+                    "remote_system_enable_capab": ["bridge", "router"]
+                },
+            ]
         }
         """
-        lldp_neighbors = {}
-        return lldp_neighbors
+        results = {}
+        lldp_rem_entry_list = []
+        command = "display lldp neighbor " + interface
+        output = self.device.send_command(command)
+        for line in output.splitlines():
+            key, match = parse_line_lldp(line)
+            if key is not None:
+                if key == 'remote_port':
+                    remote_port = match.group('remote_port')
+                elif key == 'remote_port_description':
+                    remote_port_description = match.group(
+                        'remote_port_description')
+                elif key == 'chassis_id':
+                    chassis_id = match.group('chassis_id')
+                elif key == 'system_name':
+                    system_name = match.group('system_name')
+                elif key == 'system_description':
+                    system_description = match.group('system_description')
+                elif key == 'system_capab':
+                    system_capab = match.group('system_capab')
+                elif key == 'system_enable_capab':
+                    system_enable_capab = match.group('system_enable_capab')
+
+        lldp_rem_entry_list.append(entry_dict)
+
+        entry_dict = self._create_lldp_detail(
+            remote_port,
+            remote_chassis_id,
+            remote_name,
+            remote_desc,
+            remote_capab.split(),
+            remote_enable_cap.split()
+        )
+        results[local_intf].append(neighbor_dict)
+        return results
 
     # ok
     def get_arp_table(self, vrf=""):
